@@ -1,6 +1,6 @@
 # Gerenciador de estoque
 
-##~ Responsabilidades ~
+## ~ Responsabilidades ~
 
 ### Bruno
 - Tela

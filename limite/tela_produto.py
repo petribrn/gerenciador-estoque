@@ -1,11 +1,11 @@
-from tela import Tela
+from limite.tela import Tela
 from controle.controlador_produto import ControladorProduto
 
 class TelaProduto(Tela):
     def __init__(self):
         self.__controlador = ControladorProduto
 
-    def le_numero_int(self, msg: str = "", inteiros_validos: [] = None):
+    def trata_opcoes(self, msg: str = "", inteiros_validos: [] = None):
         valor = input(msg)
         try:
             inteiro = int(valor)
@@ -24,7 +24,7 @@ class TelaProduto(Tela):
         print("4 - Alterar produto")
         print("0 - Retornar")
 
-        opcao = self.le_numero_int("Digite a opcao: ", [1,2,3,4,0])
+        opcao = self.trata_opcoes("Digite a opcao: ", [1,2,3,4,0])
         return opcao
 
     def pega_dados_produto(self):

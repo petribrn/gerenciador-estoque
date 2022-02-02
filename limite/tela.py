@@ -7,7 +7,9 @@ class Tela(ABC):
         self.__controlador = controlador
         pass
 
-    #removido a funcao trata_opcoes
+    @abstractmethod
+    def trata_opcoes(self):
+        pass
 
     @abstractmethod
     def tela_opcoes(self):

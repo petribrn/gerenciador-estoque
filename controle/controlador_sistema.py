@@ -19,17 +19,21 @@ class ControladorSistema:
     def controlador_usuario(self):
         return self.__controlador_usuario
 
+    @property
+    def controlador_movimentacoes(self):
+        return self.____controlador_movimentacoes
+
     def inicializa_sistema(self):
         self.abre_tela()
 
-    def cadastra_usuario(self):
+    def tela_usuario(self):
         self.__controlador_usuario.abre_tela()
 
-    def cadastra_produto(self):
+    def tela_produto(self):
         # Chama o controlador de produto
         self.__controlador_produto.abre_tela()
 
-    def cadastra_movimentacoes(self):
+    def tela_movimentacoes(self):
         self.__controlador_movimentacoes.abre_tela()
         # Chama o controlador de movimentacoes
 
@@ -37,7 +41,7 @@ class ControladorSistema:
         exit(0)
 
     def abre_tela(self):
-        lista_opcoes = {1: self.cadastra_usuario, 2: self.cadastra_produto, 3: self.cadastra_movimentacoes,
+        lista_opcoes = {1: self.tela_usuario, 2: self.tela_produto, 3: self.tela_movimentacoes,
                         0: self.encerra_sistema}
 
         while True:

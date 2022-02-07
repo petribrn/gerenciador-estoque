@@ -1,9 +1,6 @@
 from limite.tela import Tela
-from controle.controlador_produto import ControladorProduto
 
 class TelaProduto(Tela):
-    def __init__(self):
-        self.__controlador = ControladorProduto
 
     def trata_opcoes(self, msg: str = "", inteiros_validos: [] = None):
         valor = input(msg)

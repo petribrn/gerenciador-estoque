@@ -1,5 +1,6 @@
 from limite.tela_produto import TelaProduto
 from entidade.produto import Produto
+
 class ControladorProduto():
     def __init__(self, controlador_sistema):
         self.__produtos = []

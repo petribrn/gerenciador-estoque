@@ -5,16 +5,16 @@
 ### Bruno Petri
 - [x] Tela
 - [x] TelaProduto
-- [ ] TelaUsuario
+- [x] TelaUsuario
 - [x] ControladorProduto
-- [ ] ControladorUsuario
+- [x] ControladorUsuario
 - [x] Produto
 - [x] Usuario
 
 ### Victor Hugo
-- [X] TelaEstoque
-- [X] ControladorMovimentacoes
-- [X] Movimentação
+- [x] TelaSistema
+- [x] TelaEstoque
+- [x] ControladorSistema
+- [x] ControladorMovimentacoes
+- [x] Movimentação
 
-- [X] TelaSistema
-- [X] ControladorSistema

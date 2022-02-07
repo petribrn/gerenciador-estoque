@@ -1,16 +1,17 @@
 from limite.tela import Tela
 
 class TelaSistema(Tela):
-    def trata_opcoes(self, msg: str = "", inteiros_validos = None):
-        valor = input(msg)
-        try:
-            inteiro = int(valor)
+    def trata_opcoes(self, msg: str = "", inteiros_validos: [] = None):
+		    valor = input(msg)
+				try:
+				    inteiro = int(valor)
             if inteiros_validos and inteiro not in inteiros_validos:
-                raise ValueError
+						    raise ValueError
+            return inteiro
         except ValueError:
-            print("Valor inválido: digite novamente.")
+            print("\nValor invalido: digite novamente.")
             if inteiros_validos:
-                print(f"Valores válidos: {inteiros_validos}")
+                print(f"Valores validos: {inteiros_validos}")
 
     def tela_opcoes(self):
         print("-------- GERENCIADOR ---------")

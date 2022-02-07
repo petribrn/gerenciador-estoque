@@ -10,9 +10,9 @@ class TelaUsuario(Tela):
                 raise ValueError
             return inteiro
         except ValueError:
-            print("\nValor inválido: digite novamente.")
+            print("\nValor invalido: digite novamente.")
             if inteiros_validos:
-                print(f"Valores válidos: {inteiros_validos}")
+                print(f"Valores validos: {inteiros_validos}")
 
     def tela_opcoes(self):
         print("\n-------- USUARIOS --------")
@@ -26,7 +26,7 @@ class TelaUsuario(Tela):
         opcao = self.trata_opcoes("\nDigite a opcao: ", [1,2,3,4,5,0])
         return opcao
 
-    def pega_dados_usuario(self, lista_de_usuarios):
+    def pega_dados_usuario(self, lista_de_usuarios: []):
         print("\n-----DADOS DO USUARIO-----")
         usuario = {}
         codigos = []
@@ -37,11 +37,17 @@ class TelaUsuario(Tela):
         while True:
             nome = input("Nome: ")
             try:
-                int(nome)
-                print("\nDigite um nome valido!")
-            except ValueError:
+                if nome.isascii() == False or nome.isnumeric() == True:
+                    raise ValueError
+                if len(nome) < 2 or len(nome) > 15:
+                    raise ValueError
                 usuario["nome"] = nome
                 break
+            except ValueError:
+                print("\nDigite um nome valido!")
+                print("O nome deve ter de 2 a 15 caracteres.")
+                print("O nome nao deve conter apenas numeros.\n")
+
         while True:
             codigo = input("Codigo: ")
             try:
@@ -53,6 +59,7 @@ class TelaUsuario(Tela):
                 break
             except ValueError:
                 print("\nDigite um valor valido!")
+                print("O codigo nao deve conter letras e caracteres especiais.\n")
             except Exception:
                 print("\nO codigo ja esta cadastrado!")
 
@@ -73,7 +80,7 @@ class TelaUsuario(Tela):
                     raise ValueError
                 return int(codigo)
             except ValueError:
-                print("Digite um valor valido!")
+                print("\nDigite um valor valido!")
 
     def mostra_mensagem(self, msg: str):
         print(msg)

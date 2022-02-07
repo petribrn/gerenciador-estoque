@@ -2,11 +2,11 @@ from limite.tela import Tela
 
 class TelaSistema(Tela):
     def trata_opcoes(self, msg: str = "", inteiros_validos: [] = None):
-		    valor = input(msg)
-				try:
-				    inteiro = int(valor)
+        valor = input(msg)
+        try:
+            inteiro = int(valor)
             if inteiros_validos and inteiro not in inteiros_validos:
-						    raise ValueError
+                raise ValueError
             return inteiro
         except ValueError:
             print("\nValor invalido: digite novamente.")

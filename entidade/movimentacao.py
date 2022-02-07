@@ -1,7 +1,6 @@
 from entidade.usuario import Usuario
 from entidade.produto import Produto
 
-
 class Movimentacao:
   def __init__(self, codigo: int, usuario: Usuario, produto: Produto, quantidade: int, tipo: str):
     if (isinstance(produto, Produto)):

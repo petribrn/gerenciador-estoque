@@ -1,9 +1,8 @@
 from limite.tela_estoque import TelaEstoque
 from entidade.movimentacao import Movimentacao
-from controle.controlador_produto import ContorladorProduto
+from controle.controlador_produto import ControladorProduto
 
 from random import randint
-
 
 class ControladorMovimentacoes():
 
@@ -20,7 +19,7 @@ class ControladorMovimentacoes():
     return None
 
   def adiciona_movimentacao(self):
-    controlador_usuario = self.__controlador_sistema.controlador_ususario
+    controlador_usuario = self.__controlador_sistema.controlador_usuario
     controlador_produto = self.__controlador_sistema.controlador_produto
 
     dados_movimentacao = self.__tela__estoque.pega_dados_movimentacao()

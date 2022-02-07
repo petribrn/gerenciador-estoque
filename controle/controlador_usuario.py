@@ -8,6 +8,10 @@ class ControladorUsuario:
         self.__tela_usuario = TelaUsuario()
         self.__controlador_sistema = controlador_sistema
 
+    @property
+    def usuarios(self):
+        return self.__usuarios
+
     def inclui_usuario(self):
         dados_usuario = self.__tela_usuario.pega_dados_usuario(self.__usuarios)
         usuario = Usuario(dados_usuario["nome"], dados_usuario["codigo"])

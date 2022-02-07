@@ -7,6 +7,10 @@ class ControladorProduto():
         self.__controlador_sistema = controlador_sistema
         self.__tela_produto = TelaProduto()
 
+    @property
+    def produtos(self):
+        return self.__produtos
+
     def adiciona_produto(self):
         dados_produto = self.__tela_produto.pega_dados_produto(self.__produtos)
         produto = Produto(dados_produto["nome"], dados_produto["cor"], dados_produto["tipo"], dados_produto["descricao"], dados_produto["codigo"])

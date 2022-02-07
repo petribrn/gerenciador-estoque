@@ -21,7 +21,7 @@ class ControladorSistema:
 
     @property
     def controlador_movimentacoes(self):
-        return self.____controlador_movimentacoes
+        return self.__controlador_movimentacoes
 
     def inicializa_sistema(self):
         self.abre_tela()

@@ -12,8 +12,9 @@
 - [x] Usuario
 
 ### Victor Hugo
-- [ ] TelaSistema
-- [ ] TelaEstoque
-- [ ] ControladorSistema
-- [ ] ControladorMovimentacoes
-- [ ] Movimentação
+- [x] TelaSistema
+- [x] TelaEstoque
+- [x] ControladorSistema
+- [x] ControladorMovimentacoes
+- [x] Movimentação
+

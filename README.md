@@ -5,9 +5,9 @@
 ### Bruno Petri
 - [x] Tela
 - [x] TelaProduto
-- [ ] TelaUsuario
+- [x] TelaUsuario
 - [x] ControladorProduto
-- [ ] ControladorUsuario
+- [x] ControladorUsuario
 - [x] Produto
 - [x] Usuario
 

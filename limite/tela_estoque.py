@@ -92,8 +92,8 @@ class TelaEstoque(Tela):
     return dados_movimentacao
 
   def mostra_produto(self, dados_produto):
-    print("TITULO DO PRODUTO: ", dados_produto["titulo"])
-    print("CODIGO DO PRODUTO: ", dados_produto["codigo"])
+    print("NOME DO PRODUTO: ", dados_produto['nome'])
+    print("CODIGO DO PRODUTO: ", dados_produto['codigo'])
     print("QUANTIDADE EM ESTOQUE: ", dados_produto["quantidade"])
     print("\n")
   

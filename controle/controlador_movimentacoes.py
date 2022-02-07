@@ -88,18 +88,18 @@ class ControladorMovimentacoes():
       else:
         for e in movimentacoes_usuario:
           self.__tela__estoque.mostra_movimentacao({"codigo": e.codigo,
-                                                    "titulo_produto": e.produto.titulo,
+                                                    "nome_produto": e.produto.nome,
                                                     "codigo_produto": e.produto.codigo,
                                                     "nome_usuario": e.usuario.nome,
-                                                    "codigo_usuario": e.usuario.codigo})
+                                                    "codigo_usuario": e.usuario.codigo, "quantidade": e.quantidade})
 
   def lista_estoque(self):
     if len(self.__estoque) == 0:
       self.__tela__estoque.mostra_mensagem("\nSem itens em estoque!")
     else:
       for e in self.__estoque:
-        self.__tela__estoque.mostra_produto({"codigo": e.produto.codigo,
-                                                  "titulo_produto": e.produto.titulo,
+        self.__tela__estoque.mostra_produto({"codigo_produto": e.produto.codigo,
+                                                  "nome_produto": e.produto.nome,
                                                   "quantidade": e.quantidade})
 
   def retornar(self):

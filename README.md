@@ -2,18 +2,19 @@
 
 ## ~ Responsabilidades ~
 
-### Bruno
-- Tela
-- TelaProduto
-- TelaUsuario
-- ControladorProduto
-- ControladorUsuario
-- Produto
-- Usuario
+### Bruno Petri
+- [x] Tela
+- [x] TelaProduto
+- [x] TelaUsuario
+- [x] ControladorProduto
+- [x] ControladorUsuario
+- [x] Produto
+- [x] Usuario
 
 ### Victor Hugo
-- TelaSistema
-- TelaEstoque
-- ControladorSistema
-- ControladorMovimentacoes
-- Movimentação
+- [x] TelaSistema
+- [x] TelaEstoque
+- [x] ControladorSistema
+- [x] ControladorMovimentacoes
+- [x] Movimentação
+

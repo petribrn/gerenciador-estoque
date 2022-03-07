@@ -1,20 +1,21 @@
 # Gerenciador de estoque
 
-## ~ Responsabilidades ~
+## ~ Responsabilidades v2 ~
+### Persistencia e Interface
 
 ### Bruno Petri
-- [x] Tela
-- [x] TelaProduto
-- [x] TelaUsuario
-- [x] ControladorProduto
-- [x] ControladorUsuario
-- [x] Produto
-- [x] Usuario
+- [ ] Tela (ajustes)
+- [ ] TelaProduto (interface)
+- [ ] TelaUsuario (interface)
+- [ ] ControladorProduto (persistencia)
+- [ ] ControladorUsuario (persistencia)
+- [ ] Produto (persistencia)
+- [ ] Usuario (persistencia)
 
 ### Victor Hugo
-- [x] TelaSistema
-- [x] TelaEstoque
-- [x] ControladorSistema
-- [x] ControladorMovimentacoes
-- [x] Movimentação
+- [ ] TelaSistema (interface)
+- [ ] TelaEstoque (interface)
+- [ ] ControladorSistema (persistencia)
+- [ ] ControladorMovimentacoes (persistencia)
+- [ ] Movimentação (persistencia)
 

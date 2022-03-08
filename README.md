@@ -17,5 +17,5 @@
 - [ ] TelaEstoque (interface)
 - [ ] ControladorSistema (persistencia)
 - [ ] ControladorMovimentacoes (persistencia)
-- [ ] Movimentação (persistencia)
+- [x] Movimentação (persistencia)
 

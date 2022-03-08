@@ -1,33 +1,34 @@
 from limite.tela_usuario import TelaUsuario
 from entidade.usuario import Usuario
+from persistencia.usuario_dao import UsuarioDAO
 
 
 class ControladorUsuario:
     def __init__(self, controlador_sistema):
-        self.__usuarios = []
+        self.__usuario_dao = UsuarioDAO()
         self.__tela_usuario = TelaUsuario()
         self.__controlador_sistema = controlador_sistema
 
     @property
     def usuarios(self):
-        return self.__usuarios
+        return self.__usuario_dao.get_all()
 
     def inclui_usuario(self):
-        dados_usuario = self.__tela_usuario.pega_dados_usuario(self.__usuarios)
+        dados_usuario = self.__tela_usuario.pega_dados_usuario(self.__usuario_dao.get_all())
         usuario = Usuario(dados_usuario["nome"], dados_usuario["codigo"])
-        self.__usuarios.append(usuario)
+        self.__usuario_dao.persist(usuario)
 
     def exclui_usuario(self):
         self.__tela_usuario.mostra_mensagem("\n-------- EXCLUIR USUARIO --------")
         self.lista_usuarios()
-        if len(self.__usuarios) < 1:
+        if len(self.__usuario_dao.get_all()) < 1:
             pass
         else:
             codigo_usuario = self.__tela_usuario.seleciona_usuario()
             usuario = self.pega_usuario_por_codigo(codigo_usuario)
 
             if usuario is not None:
-                self.__usuarios.remove(usuario)
+                self.__usuario_dao.remove(usuario)
                 self.__tela_usuario.mostra_mensagem("\nUsuario excluido.\n")
             else:
                 self.__tela_usuario.mostra_mensagem("\nUsuario inexistente!\n")
@@ -35,23 +36,24 @@ class ControladorUsuario:
     def altera_usuario(self):
         self.__tela_usuario.mostra_mensagem("\n-------- ALTERAR USUARIO --------")
         self.lista_usuarios()
-        if len(self.__usuarios) < 1:
+        if len(self.__usuario_dao.get_all()) < 1:
             pass
         else:
             codigo_usuario = self.__tela_usuario.seleciona_usuario()
             usuario = self.pega_usuario_por_codigo(codigo_usuario)
 
             if usuario is not None:
-                novos_dados_usr = self.__tela_usuario.pega_dados_usuario(self.__usuarios)
+                novos_dados_usr = self.__tela_usuario.pega_dados_usuario(self.__usuario_dao.get_all())
                 usuario.nome = novos_dados_usr["nome"]
                 usuario.codigo = novos_dados_usr["codigo"]
+                self.__usuario_dao.persist(usuario)
                 self.lista_usuarios()
             else:
                 self.__tela_usuario.mostra_mensagem("\nUsuario inexistente!\n")
 
     def lista_um_usuario(self):
 
-        if len(self.__usuarios) < 1:
+        if len(self.__usuario_dao.get_all()) < 1:
             self.__tela_usuario.mostra_mensagem("\nNao existem usuarios cadastrados.")
             self.__tela_usuario.mostra_mensagem("Primeiro cadastre um usuario!\n")
         else:
@@ -65,17 +67,17 @@ class ControladorUsuario:
                 self.__tela_usuario.mostra_mensagem("Usuario inexistente!\n")
 
     def lista_usuarios(self):
-        quantidade_usuarios = len(self.__usuarios)
+        quantidade_usuarios = len(self.__usuario_dao.get_all())
         if quantidade_usuarios < 1:
             self.__tela_usuario.mostra_mensagem("\nNao existem usuarios cadastrados.")
             self.__tela_usuario.mostra_mensagem("Primeiro cadastre um usuario!\n")
         else:
             self.__tela_usuario.mostra_mensagem(f"\n{'Existe' if quantidade_usuarios < 2 else 'Existem'} {quantidade_usuarios} {'usuarios cadastrados' if quantidade_usuarios > 1 else 'usuario cadastrado'}:\n")
-            for usuario in self.__usuarios:
+            for usuario in self.__usuario_dao.get_all():
                 self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "codigo": usuario.codigo})
 
     def pega_usuario_por_codigo(self, codigo_usuario):
-        for usuario in self.__usuarios:
+        for usuario in self.__usuario_dao.get_all():
             if usuario.codigo == codigo_usuario:
                 return usuario
         return None

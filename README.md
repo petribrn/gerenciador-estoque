@@ -12,6 +12,7 @@
 - [x] Produto (persistencia)
 - [x] Usuario (persistencia)
 - [x] Correções tela.py e derivadas
+- [x] Exceptions codigo_ja_cadastrado e valor_invalido
 
 ### Victor Hugo
 - [ ] TelaSistema (interface)

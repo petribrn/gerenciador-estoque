@@ -1,4 +1,6 @@
 from limite.tela import Tela
+from exceptions.valor_invalido_exception import ValorInvalidoException
+from exceptions.codigo_ja_cadastrado_exception import CodigoJaCadastradoException
 
 class TelaUsuario(Tela):
 
@@ -43,16 +45,15 @@ class TelaUsuario(Tela):
             codigo = input("Codigo: ")
             try:
                 if codigo.isnumeric() == False:
-                    raise ValueError
+                    raise ValorInvalidoException
                 if int(codigo) in codigos:
-                    raise Exception
+                    raise CodigoJaCadastradoException(codigo)
                 usuario["codigo"] = int(codigo)
                 break
-            except ValueError:
-                print("\nDigite um valor valido!")
-                print("O codigo nao deve conter letras e caracteres especiais.\n")
-            except Exception:
-                print("\nO codigo ja esta cadastrado!")
+            except ValorInvalidoException as e:
+                print(e)
+            except CodigoJaCadastradoException as f:
+                print(f)
 
         return usuario
 
@@ -68,10 +69,10 @@ class TelaUsuario(Tela):
             codigo = input("\nDigite o codigo do usuario: ")
             try:
                 if codigo.isnumeric() == False:
-                    raise ValueError
+                    raise ValorInvalidoException
                 return int(codigo)
-            except ValueError:
-                print("\nDigite um valor valido!")
+            except ValorInvalidoException as e:
+                print(e)
 
     def mostra_mensagem(self, msg: str):
         print(msg)

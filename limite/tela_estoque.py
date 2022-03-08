@@ -2,17 +2,8 @@ from limite.tela import Tela
 
 class TelaEstoque(Tela):
 
-  def trata_opcoes(self, msg: str = "", inteiros_validos: [] = None):
-    valor = input(msg)
-    try:
-      inteiro = int(valor)
-      if inteiros_validos and inteiro not in inteiros_validos:
-        raise ValueError
-      return inteiro
-    except ValueError:
-      print("\nValor invalido: digite novamente.")
-      if inteiros_validos:
-        print(f"Valores validos: {inteiros_validos}")
+  def __init__(self):
+    super().__init__()
 
   def tela_opcoes(self):
     print("\n-------- ESTOQUE ----------")
@@ -23,7 +14,7 @@ class TelaEstoque(Tela):
     print("4 - Listar movimentações de um usuário")
     print("0 - Retornar")
 
-    opcao = self.trata_opcoes("Digite a opcao: ", [1,2,3,4,0])
+    opcao = super().trata_opcoes("Digite a opcao: ", [1,2,3,4,0])
     return opcao
 
   def pega_dados_movimentacao(self, lista_produtos: [], lista_usuarios: []):

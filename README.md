@@ -11,6 +11,7 @@
 - [x] ControladorUsuario (persistencia)
 - [x] Produto (persistencia)
 - [x] Usuario (persistencia)
+- [x] Correções tela.py e derivadas
 
 ### Victor Hugo
 - [ ] TelaSistema (interface)

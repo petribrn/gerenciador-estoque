@@ -7,10 +7,10 @@
 - [ ] Tela (ajustes)
 - [ ] TelaProduto (interface)
 - [ ] TelaUsuario (interface)
-- [ ] ControladorProduto (persistencia)
-- [ ] ControladorUsuario (persistencia)
-- [ ] Produto (persistencia)
-- [ ] Usuario (persistencia)
+- [x] ControladorProduto (persistencia)
+- [x] ControladorUsuario (persistencia)
+- [x] Produto (persistencia)
+- [x] Usuario (persistencia)
 
 ### Victor Hugo
 - [ ] TelaSistema (interface)

@@ -28,3 +28,6 @@ class AbstractDAO(ABC):
 
     def get_all(self):
         return self.__cache.values()
+
+    def get_all_keys(self):
+        return self.__cache.keys()

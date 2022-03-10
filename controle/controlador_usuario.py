@@ -11,7 +11,7 @@ from limite.tela_lista_usuarios import TelaListaUsuarios
 
 class ControladorUsuario:
 
-    def __init__(self):
+    def __init__(self, controlador_sistema):
         self.__usuario_dao = UsuarioDAO()
         self.__tela_usuario = TelaUsuario()
         self.__tela_cadastro = TelaCadastroUsuario()
@@ -20,6 +20,7 @@ class ControladorUsuario:
         self.__tela_remove_usuario = TelaRemoveUsuario()
         self.__tela_lista_um_usuario = TelaListaUmUsuario()
         self.__tela_lista_usuarios = TelaListaUsuarios()
+        self.__controlador_sistema = controlador_sistema
 
     def inclui_usuario(self):
         self.__tela_cadastro.init_components()
@@ -160,7 +161,7 @@ class ControladorUsuario:
 
 
     def retornar(self):
-        print('retorna para tela principal') #implementar
+        self.__tela_usuario.close()
 
     def sair(self):
         exit(0)
@@ -174,4 +175,9 @@ class ControladorUsuario:
             self.__tela_usuario.init_components()
             opcao_escolhida = self.__tela_usuario.tela_opcoes()
             self.__tela_usuario.close()
-            opcoes[opcao_escolhida]()
+
+            if opcao_escolhida == 6 or opcao_escolhida == None or sg.WIN_CLOSED:
+                self.__tela_usuario.close()
+                break
+            else:
+                opcoes[opcao_escolhida]()

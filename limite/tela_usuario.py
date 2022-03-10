@@ -23,8 +23,8 @@ class TelaUsuario:
 
     def open(self):
         botao, valores = self.__window.Read()
-        if botao == None:
-            botao = 0
+        if botao == None or botao == sg.WIN_CLOSED or botao == 6:
+            self.close()
         return botao
 
     def close(self):

@@ -1,9 +1,10 @@
 import PySimpleGUI as sg
+from limite.abstract_tela import Tela
 
-class TelaListaUsuarios:
+class TelaListaUsuarios(Tela):
 
     def __init__(self):
-        self.__window = None
+        pass
 
     def init_components(self, lista_usuarios, nome_colunas):
 
@@ -20,21 +21,11 @@ class TelaListaUsuarios:
                     [sg.Cancel("Ok", key='ok')]
                 ]
 
-        self.__window = sg.Window("Lista de usuários", layout=layout, resizable=True, finalize=True, modal=True)
-        self.__window.set_min_size((200,(len(lista_usuarios)+1)*10))
+        super().__init__(sg.Window("Lista de usuários", layout=layout, resizable=True, finalize=True, modal=True),(200,(len(lista_usuarios)+1)*10) )
 
     def open(self):
         while True:
-            botao, valores = self.__window.Read()
+            botao, valores = super().read()
             if botao == 'ok' or botao == None or botao == sg.WIN_CLOSED:
                 break
         return botao
-
-    def close(self):
-        self.__window.Close()
-
-    def show_message(self, titulo: str, msg):
-        sg.Popup(titulo, msg)
-
-    def tela_opcoes(self):
-        return self.open()

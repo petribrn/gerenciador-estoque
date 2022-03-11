@@ -1,12 +1,12 @@
 import PySimpleGUI as sg
+from limite.abstract_tela import Tela
 
-class TelaUsuario:
+class TelaUsuario(Tela):
 
     def __init__(self):
-        self.__window = None
+        pass
 
     def init_components(self):
-
         sg.theme("Reddit")
         layout = [
                     [sg.Text("Escolha as opções:")],
@@ -18,20 +18,10 @@ class TelaUsuario:
                     [sg.Cancel("Retornar", key=6, button_color='gray'), sg.Cancel('Sair', key=0, button_color='red')]
                 ]
 
-        self.__window = sg.Window("Tela de usuários", layout=layout, resizable=True, finalize=True)
-        self.__window.set_min_size((200,200))
+        super().__init__(sg.Window("Tela de usuários", layout=layout, resizable=True, modal=True, finalize=True), (200,200))
 
     def open(self):
-        botao, valores = self.__window.Read()
+        botao, valores = super().read()
         if botao == None or botao == sg.WIN_CLOSED or botao == 6:
-            self.close()
+            super().close()
         return botao
-
-    def close(self):
-        self.__window.Close()
-
-    def show_message(self, titulo: str, msg):
-        sg.Popup(titulo, msg)
-
-    def tela_opcoes(self):
-        return self.open()

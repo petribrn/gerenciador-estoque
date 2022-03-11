@@ -1,14 +1,14 @@
 import PySimpleGUI as sg
-
+from limite.abstract_tela import Tela
 from exceptions.entrada_vazia_exception import EntradaVaziaException
 from exceptions.valor_invalido_exception import ValorInvalidoException
 from exceptions.codigo_ja_cadastrado_exception import CodigoJaCadastradoException
 
 
-class TelaCadastroUsuario:
+class TelaCadastroUsuario(Tela):
 
     def __init__(self):
-        self.__window = None
+        pass
 
     def init_components(self):
 
@@ -20,12 +20,12 @@ class TelaCadastroUsuario:
                     [sg.Submit("Incluir", key='incluir', button_color='gray'), sg.Cancel("Cancelar", button_color='red', key='cancel')]
                 ]
 
-        self.__window = sg.Window("Cadastro de Usuário", layout=layout, resizable=False, finalize=True)
-        self.__window.set_min_size((50,50))
+        super().__init__(sg.Window("Cadastro de Usuário", layout=layout, resizable=False, finalize=True), (50,50))
+
 
     def open(self, lista_entidade):
         while True:
-            botao, valores = self.__window.Read()
+            botao, valores = super().read()
             if botao == 'incluir':
                 try:
                     if valores is not None and valores['nome'] != '' and valores['codigo'] != '':
@@ -44,31 +44,24 @@ class TelaCadastroUsuario:
                                     if valores['codigo'] in lista_entidade:
                                         raise CodigoJaCadastradoException(valores['codigo'])
 
-                                    self.close()
+                                    super().close()
                                     break
 
                         except ValorInvalidoException as e:
-                            self.show_message('Código inválido!', e)
+                            super().show_message('Código inválido!', e)
                         except CodigoJaCadastradoException as f:
-                            self.show_message('Código já cadastrado!', f)
+                            super().show_message('Código já cadastrado!', f)
                     else:
                         raise EntradaVaziaException
                 except EntradaVaziaException as g:
-                    self.show_message('Campos incompletos!', g)
+                    super().show_message('Campos incompletos!', g)
 
             elif botao == 'cancel':
-                self.close()
+                super().close()
                 break
 
             elif botao in ('cancel', sg.WIN_CLOSED):
-                self.close()
+                super().close()
                 break
 
         return botao, valores
-
-    def close(self):
-        self.__window.Close()
-
-    def show_message(self, titulo: str, msg):
-        sg.Popup(titulo, msg)
-

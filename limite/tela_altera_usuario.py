@@ -1,11 +1,13 @@
 import PySimpleGUI as sg
+from limite.abstract_tela import Tela
 from exceptions.entrada_vazia_exception import EntradaVaziaException
 from exceptions.valor_invalido_exception import ValorInvalidoException
 
-class TelaAlteraUsuario:
+
+class TelaAlteraUsuario(Tela):
 
     def __init__(self):
-        self.__window = None
+        pass
 
     def init_components(self, usuario):
 
@@ -17,12 +19,11 @@ class TelaAlteraUsuario:
                     [sg.Submit("Alterar", key='alterar', button_color='gray'), sg.Cancel("Cancelar", button_color='red', key='cancel')]
                 ]
 
-        self.__window = sg.Window("Alteração de Usuário", layout=layout, resizable=False, finalize=True)
-        self.__window.set_min_size((50,50))
+        super().__init__(sg.Window("Alteração de Usuário", layout=layout, resizable=False, finalize=True), (50,80))
 
     def open(self):
         while True:
-            botao, valores = self.__window.Read()
+            botao, valores = super().read()
             if botao == 'alterar':
                 try:
                     if valores is not None and valores['novo_nome'] != '' and valores['novo_nome'] is not None:
@@ -35,29 +36,23 @@ class TelaAlteraUsuario:
 
                             else:
                                 valores['novo_nome'] = valores['novo_nome']
-                                self.close()
+                                super().close()
                                 break
 
                         except ValorInvalidoException as e:
-                            self.show_message('Nome inválido!', e)
+                            super().show_message('Nome inválido!', e)
                     else:
                         raise EntradaVaziaException
 
                 except EntradaVaziaException as f:
-                    self.show_message('Campos incompletos!', f)
+                    super().show_message('Campos incompletos!', f)
 
             elif botao == 'cancel':
-                self.close()
+                super().close()
                 break
 
             elif botao in ('cancel', sg.WIN_CLOSED):
-                self.close()
+                super().close()
                 break
 
         return botao, valores['novo_nome']
-
-    def close(self):
-        self.__window.Close()
-
-    def show_message(self, titulo: str, msg):
-        sg.Popup(titulo, msg)

@@ -1,9 +1,10 @@
 import PySimpleGUI as sg
+from limite.abstract_tela import Tela
 
-class TelaRemoveUsuario:
+class TelaRemoveUsuario(Tela):
 
     def __init__(self):
-        self.__window = None
+        pass
 
     def init_components(self, usuario):
         sg.theme("Reddit")
@@ -14,16 +15,9 @@ class TelaRemoveUsuario:
             [sg.Submit("Remover", key='remover', button_color='gray'),sg.Submit("Cancelar", button_color='red', key='cancelar')]
         ]
 
-        self.__window = sg.Window("Remover usuário", layout=layout, resizable=False, finalize=True)
-        self.__window.set_min_size((50, 50))
+        super().__init__(sg.Window("Remover usuário", layout=layout, resizable=False, finalize=True), (50,50))
 
     def open(self):
-        botao, valores = self.__window.Read()
+        botao, valores = super().read()
 
         return botao
-
-    def close(self):
-        self.__window.Close()
-
-    def show_message(self, titulo: str, msg):
-        sg.Popup(titulo, msg)

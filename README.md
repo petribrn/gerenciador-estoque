@@ -4,15 +4,17 @@
 ### Persistencia e Interface
 
 ### Bruno Petri
-- [ ] Tela (ajustes)
-- [ ] TelaProduto (interface)
-- [ ] TelaUsuario (interface)
+- [x] Tela (old) - ajustes
+- [x] Abstract_tela: (new) Tela
+- [ ] TelaProduto (interface) + criação telas auxiliares
+- [x] TelaUsuario (interface) + criação telas auxiliares
+- [ ] ControladorProduto (interface)
 - [x] ControladorProduto (persistencia)
+- [x] ControladorUsuario (interface)
 - [x] ControladorUsuario (persistencia)
 - [x] Produto (persistencia)
 - [x] Usuario (persistencia)
-- [x] Correções tela.py e derivadas
-- [x] Exceptions codigo_ja_cadastrado e valor_invalido
+- [x] Exceptions codigo_ja_cadastrado, valor_invalido, entrada_vazia e codigo_inexistente
 
 ### Victor Hugo
 - [ ] TelaSistema (interface)

@@ -22,6 +22,10 @@ class ControladorUsuario:
         self.__tela_lista_usuarios = TelaListaUsuarios()
         self.__controlador_sistema = controlador_sistema
 
+    @property
+    def usuarios(self):
+        return self.__usuario_dao.get_all()
+
     def inclui_usuario(self):
         self.__tela_cadastro.init_components()
         while True:

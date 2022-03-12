@@ -15,7 +15,7 @@
 - [x] Produto (persistencia)
 - [x] Usuario (persistencia)
 - [x] Exceptions codigo_ja_cadastrado, valor_invalido, entrada_vazia e codigo_inexistente
-- [ ] Mais exceptions e ajustes extras na GUI
+- [x] Mais exceptions e ajustes extras na GUI
 
 ### Victor Hugo
 - [ ] TelaSistema (interface)

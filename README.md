@@ -6,15 +6,16 @@
 ### Bruno Petri
 - [x] Tela (old) - ajustes
 - [x] Abstract_tela: (new) Tela
-- [ ] TelaProduto (interface) + criação telas auxiliares
+- [x] TelaProduto (interface) + criação telas auxiliares
 - [x] TelaUsuario (interface) + criação telas auxiliares
-- [ ] ControladorProduto (interface)
+- [x] ControladorProduto (interface)
 - [x] ControladorProduto (persistencia)
 - [x] ControladorUsuario (interface)
 - [x] ControladorUsuario (persistencia)
 - [x] Produto (persistencia)
 - [x] Usuario (persistencia)
 - [x] Exceptions codigo_ja_cadastrado, valor_invalido, entrada_vazia e codigo_inexistente
+- [ ] Mais exceptions e ajustes extras na GUI
 
 ### Victor Hugo
 - [ ] TelaSistema (interface)

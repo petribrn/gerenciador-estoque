@@ -1,9 +1,10 @@
 import PySimpleGUI as sg
 from limite.abstract_tela import Tela
 from exceptions.entrada_vazia_exception import EntradaVaziaException
-from exceptions.valor_invalido_exception import ValorInvalidoException
-from exceptions.codigo_ja_cadastrado_exception import CodigoJaCadastradoException
-
+from exceptions.nome_invalido_exception import NomeInvalidoException
+from exceptions.cor_invalida_exception import CorInvalidaException
+from exceptions.tipo_invalido_exception import TipoInvalidoException
+from exceptions.descricao_invalida_exception import DescricaoInvalidaException
 
 class TelaAlteraProduto(Tela):
 
@@ -47,23 +48,33 @@ class TelaAlteraProduto(Tela):
                         else:
                             try:
                                 if valores['nome'].isascii() == False or valores['nome'].isnumeric() == True:
-                                    raise ValorInvalidoException
+                                    raise NomeInvalidoException
                                 elif len(valores['nome']) < 2 or len(valores['nome']) > 15:
-                                    raise ValorInvalidoException
-                                elif valores['cor'].isalpha() == False or valores['tipo'].isalpha() == False:
-                                    raise ValorInvalidoException
-                                elif len(valores['cor']) < 2 or len(valores['tipo']) < 2:
-                                    raise ValorInvalidoException
+                                    raise NomeInvalidoException
+                                elif valores['cor'].isalpha() == False:
+                                    raise CorInvalidaException
+                                elif valores['tipo'].isalpha() == False:
+                                    raise TipoInvalidoException
+                                elif len(valores['cor']) < 2:
+                                    raise CorInvalidaException
+                                elif len(valores['tipo']) < 2:
+                                    raise TipoInvalidoException
                                 elif valores['descricao'].isascii() == False or valores['descricao'].isnumeric() == True:
-                                    raise ValorInvalidoException
+                                    raise DescricaoInvalidaException
                                 elif len(valores['descricao']) < 2 or len(valores['descricao']) > 30:
-                                    raise ValorInvalidoException
+                                    raise DescricaoInvalidaException
                                 else:
                                     super().close()
                                     break
 
-                            except ValorInvalidoException as e:
-                                super().show_message('Código inválido!', e)
+                            except NomeInvalidoException as h:
+                                super().show_message('Nome inválido!', h)
+                            except CorInvalidaException as i:
+                                super().show_message('Cor inválida!', i)
+                            except TipoInvalidoException as j:
+                                super().show_message('Tipo inválido!', j)
+                            except DescricaoInvalidaException as k:
+                                super().show_message('Descrição inválida!', k)
                     else:
                         raise EntradaVaziaException
                 except EntradaVaziaException as g:

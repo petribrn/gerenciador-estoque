@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from limite.abstract_tela import Tela
-from exceptions.valor_invalido_exception import ValorInvalidoException
+from exceptions.codigo_invalido_exception import CodigoInvalidoException
 from exceptions.entrada_vazia_exception import EntradaVaziaException
 
 
@@ -29,19 +29,19 @@ class TelaSelecionaCodigo(Tela):
                             if not (valores['codigo'] == '' or valores['codigo'] == None):
 
                                 if valores['codigo'].isnumeric() == False:
-                                    raise ValorInvalidoException
+                                    raise CodigoInvalidoException
                                 else:
                                     valores['codigo'] = int(valores['codigo'])
                                     super().close()
                                     break
 
-                        except ValorInvalidoException as e:
+                        except CodigoInvalidoException as e:
                             super().show_message('Código inválido!', e)
                     else:
                         raise EntradaVaziaException
 
-                except ValorInvalidoException as f:
-                    super().show_message('Valor inválido!', f)
+                except CodigoInvalidoException as f:
+                    super().show_message('Código inválido!', f)
 
                 except EntradaVaziaException as g:
                     super().show_message('Campos incompletos!', g)

@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 from limite.abstract_tela import Tela
 from exceptions.entrada_vazia_exception import EntradaVaziaException
-from exceptions.valor_invalido_exception import ValorInvalidoException
+from exceptions.nome_invalido_exception import NomeInvalidoException
 
 
 class TelaAlteraUsuario(Tela):
@@ -30,17 +30,17 @@ class TelaAlteraUsuario(Tela):
                     if valores is not None and valores['novo_nome'] != '' and valores['novo_nome'] is not None:
                         try:
                             if valores['novo_nome'].isascii() == False or valores['novo_nome'].isnumeric() == True:
-                                raise ValorInvalidoException
+                                raise NomeInvalidoException
 
                             elif len(valores['novo_nome']) < 2 or len(valores['novo_nome']) > 15:
-                                raise ValorInvalidoException # criar exception para strings invalidas
+                                raise NomeInvalidoException # criar exception para strings invalidas
 
                             else:
                                 valores['novo_nome'] = valores['novo_nome']
                                 super().close()
                                 break
 
-                        except ValorInvalidoException as e:
+                        except NomeInvalidoException as e:
                             super().show_message('Nome inválido!', e)
                     else:
                         raise EntradaVaziaException

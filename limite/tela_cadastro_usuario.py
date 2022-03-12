@@ -1,8 +1,9 @@
 import PySimpleGUI as sg
 from limite.abstract_tela import Tela
 from exceptions.entrada_vazia_exception import EntradaVaziaException
-from exceptions.valor_invalido_exception import ValorInvalidoException
+from exceptions.codigo_invalido_exception import CodigoInvalidoException
 from exceptions.codigo_ja_cadastrado_exception import CodigoJaCadastradoException
+from exceptions.nome_invalido_exception import NomeInvalidoException
 
 
 class TelaCadastroUsuario(Tela):
@@ -33,11 +34,11 @@ class TelaCadastroUsuario(Tela):
                             if not (valores['codigo'] == '' or valores['codigo'] == None):
 
                                 if valores['codigo'].isnumeric() == False:
-                                    raise ValorInvalidoException
+                                    raise CodigoInvalidoException
                                 elif valores['nome'].isascii() == False or valores['nome'].isnumeric() == True:
-                                    raise ValorInvalidoException
+                                    raise NomeInvalidoException
                                 elif len(valores['nome']) < 2 or len(valores['nome']) > 15:
-                                    raise ValorInvalidoException
+                                    raise NomeInvalidoException
 
                                 else:
                                     valores['codigo'] = int(valores['codigo'])
@@ -47,8 +48,10 @@ class TelaCadastroUsuario(Tela):
                                     super().close()
                                     break
 
-                        except ValorInvalidoException as e:
+                        except CodigoInvalidoException as e:
                             super().show_message('Código inválido!', e)
+                        except NomeInvalidoException as n:
+                            super().show_message("Nome inválido!", n)
                         except CodigoJaCadastradoException as f:
                             super().show_message('Código já cadastrado!', f)
                     else:

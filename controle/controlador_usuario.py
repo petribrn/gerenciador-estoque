@@ -13,7 +13,7 @@ class ControladorUsuario:
     def __init__(self, controlador_sistema):
         self.__usuario_dao = UsuarioDAO()
         self.__tela_usuario = TelaUsuario()
-        self.__tela_cadastro = TelaCadastroUsuario()
+        self.__tela_cadastro_usuario = TelaCadastroUsuario()
         self.__tela_seleciona_codigo = TelaSelecionaCodigo()
         self.__tela_altera_usuario = TelaAlteraUsuario()
         self.__tela_remove_usuario = TelaRemoveUsuario()
@@ -25,9 +25,9 @@ class ControladorUsuario:
         return self.__usuario_dao.get_all()
 
     def inclui_usuario(self):
-        self.__tela_cadastro.init_components()
+        self.__tela_cadastro_usuario.init_components()
         while True:
-            botao, valores = self.__tela_cadastro.open(self.__usuario_dao.get_all_keys())
+            botao, valores = self.__tela_cadastro_usuario.open(self.__usuario_dao.get_all_keys())
 
             if botao == 'incluir':
                 if valores is not None:

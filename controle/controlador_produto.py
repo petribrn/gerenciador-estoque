@@ -15,7 +15,7 @@ class ControladorProduto:
         self.__produto_dao = ProdutoDAO()
         self.__tela_produto = TelaProduto()
         self.__controlador_sistema = controlador_sistema
-        self.__tela_cadastro = TelaCadastroProduto()
+        self.__tela_cadastro_produto = TelaCadastroProduto()
         self.__tela_seleciona_codigo = TelaSelecionaCodigo()
         self.__tela_altera_produto = TelaAlteraProduto()
         self.__tela_remove_produto = TelaRemoveProduto()
@@ -26,9 +26,9 @@ class ControladorProduto:
         return self.__produto_dao.get_all()
 
     def inclui_produto(self):
-        self.__tela_cadastro.init_components()
+        self.__tela_cadastro_produto.init_components()
         while True:
-            botao, valores = self.__tela_cadastro.open(self.__produto_dao.get_all_keys())
+            botao, valores = self.__tela_cadastro_produto.open(self.__produto_dao.get_all_keys())
 
             if botao == 'incluir':
                 if valores is not None:

@@ -13,9 +13,10 @@ class TelaAlteraUsuario(Tela):
 
         sg.theme("Reddit")
         layout = [
-                    [sg.Text("Alterar usuário:")],
-                    [sg.Text(f"Antigo nome: {usuario.nome}")],
-                    [sg.Text("Novo nome:", size=(10,1)), sg.InputText(key='novo_nome', size=(18,1))],
+                    [sg.Text(f"Alterar usuário de código {usuario.codigo}:")],
+                    [sg.Text(f"Nome: {usuario.nome}")],
+                    [sg.Text('Novos dados do usuário:')],
+                    [sg.Text("Nome:", size=(10,1)), sg.InputText(key='novo_nome', size=(18,1))],
                     [sg.Submit("Alterar", key='alterar', button_color='gray'), sg.Cancel("Cancelar", button_color='red', key='cancel')]
                 ]
 

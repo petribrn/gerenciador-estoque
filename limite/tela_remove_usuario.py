@@ -11,7 +11,7 @@ class TelaRemoveUsuario(Tela):
         layout = [
             [sg.Text("Deseja remover esse usuário?")],
             [sg.Text(f'Nome: {usuario.nome}', size=(10, 1))],
-            [sg.Text(f'Nome: {usuario.codigo}', size=(10, 1))],
+            [sg.Text(f'Codigo: {usuario.codigo}', size=(10, 1))],
             [sg.Submit("Remover", key='remover', button_color='gray'),sg.Submit("Cancelar", button_color='red', key='cancelar')]
         ]
 

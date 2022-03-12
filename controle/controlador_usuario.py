@@ -6,8 +6,7 @@ from limite.tela_altera_usuario import TelaAlteraUsuario
 from limite.tela_cadastro_usuario import TelaCadastroUsuario
 from limite.tela_seleciona_codigo import TelaSelecionaCodigo
 from limite.tela_remove_usuario import TelaRemoveUsuario
-from limite.tela_lista_um_usuario import TelaListaUmUsuario
-from limite.tela_lista_usuarios import TelaListaUsuarios
+from limite.tela_lista_entidades import TelaListaEntidades
 
 class ControladorUsuario:
 
@@ -18,8 +17,7 @@ class ControladorUsuario:
         self.__tela_seleciona_codigo = TelaSelecionaCodigo()
         self.__tela_altera_usuario = TelaAlteraUsuario()
         self.__tela_remove_usuario = TelaRemoveUsuario()
-        self.__tela_lista_um_usuario = TelaListaUmUsuario()
-        self.__tela_lista_usuarios = TelaListaUsuarios()
+        self.__tela_lista_entidades = TelaListaEntidades()
         self.__controlador_sistema = controlador_sistema
 
     @property
@@ -123,6 +121,8 @@ class ControladorUsuario:
             botao, codigo = self.__tela_seleciona_codigo.open()
 
             usuario_encontrado = None
+            informacoes_tabela = []
+            colunas = ['Código', 'Usuário']
 
             if botao == 'buscar':
                 if codigo is not None and codigo in self.__usuario_dao.get_all_keys():
@@ -132,11 +132,12 @@ class ControladorUsuario:
                             self.__tela_usuario.show_message("Usuario encontrado!",
                                                              f"O usuário de código {codigo} foi encontrado.")
                             break
-                    self.__tela_lista_um_usuario.init_components(usuario_encontrado)
+                    informacoes_tabela.append([usuario_encontrado.codigo, usuario_encontrado.nome])
+                    self.__tela_lista_entidades.init_components(informacoes_tabela, colunas, 'Lista de usuários')
                     while True:
-                        botao = self.__tela_lista_um_usuario.open()
+                        botao = self.__tela_lista_entidades.open()
                         if botao == 'ok' or botao == None:
-                            self.__tela_lista_um_usuario.close()
+                            self.__tela_lista_entidades.close()
                             break
                 else:
                     if botao != 'cancelar':
@@ -152,15 +153,15 @@ class ControladorUsuario:
 
             for usuario in self.__usuario_dao.get_all():
                 informacoes_tabela.append([usuario.codigo, usuario.nome])
-            self.__tela_lista_usuarios.init_components(informacoes_tabela, colunas)
+            self.__tela_lista_entidades.init_components(informacoes_tabela, colunas, 'Lista de usuários')
             while True:
-                botao = self.__tela_lista_usuarios.open()
+                botao = self.__tela_lista_entidades.open()
 
                 if botao == 'ok':
-                    self.__tela_lista_usuarios.close()
+                    self.__tela_lista_entidades.close()
                     break
                 else:
-                    self.__tela_lista_usuarios.close()
+                    self.__tela_lista_entidades.close()
                     break
 
 

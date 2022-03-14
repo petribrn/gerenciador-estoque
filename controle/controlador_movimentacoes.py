@@ -29,7 +29,6 @@ class ControladorMovimentacoes():
     self.__tela_tipo_movimentacao = TelaTipoMovimentacao()
     self.__tela_adiciona_estoque = TelaAdicionaEstoque()
     self.__tela_remove_estoque = TelaRemoveEstoque()
-    self.__estoque = Estoque
 
 
   def pega_movimentacao_por_codigo(self, codigo: int):

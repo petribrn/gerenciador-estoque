@@ -1,6 +1,14 @@
 import PySimpleGUI as sg
 from limite.abstract_tela import Tela
 
+from exceptions.entrada_vazia_exception import EntradaVaziaException
+from exceptions.codigo_invalido_exception import CodigoInvalidoException
+from exceptions.codigo_ja_cadastrado_exception import CodigoJaCadastradoException
+from exceptions.nome_invalido_exception import NomeInvalidoException
+from exceptions.cor_invalida_exception import CorInvalidaException
+from exceptions.tipo_invalido_exception import TipoInvalidoException
+from exceptions.descricao_invalida_exception import DescricaoInvalidaException
+
 class TelaAdicionaEstoque(Tela):
 
     def __init__(self):
@@ -19,7 +27,35 @@ class TelaAdicionaEstoque(Tela):
 
 
     def open(self):
-        botao, valores = super().read()
-        if botao == None or botao == sg.WIN_CLOSED or botao == 'cancel':
-            super().close()
+        while True:
+            botao, valores = super().read()
+            if botao == 'incluir':
+                try:
+                    if valores is not None:
+                        if valores['quantidade'] == '':
+                            raise EntradaVaziaException
+                        else:
+                            try:
+                                if valores['quantidade'].isnumeric() == False:
+                                    raise CodigoInvalidoException
+                                else:
+                                    valores['quantidade'] = int(valores['quantidade'])
+                                    super().close()
+                                    break
+
+                            except CodigoInvalidoException as e:
+                                super().show_message('Quantidade inválida!', e)
+                    else:
+                        raise EntradaVaziaException
+                except EntradaVaziaException as g:
+                    super().show_message('Campos incompletos!', g)
+
+            elif botao == 'cancel':
+                super().close()
+                break
+
+            elif botao in ('cancel', sg.WIN_CLOSED):
+                super().close()
+                break
+
         return botao, valores

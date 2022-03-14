@@ -1,5 +1,10 @@
 class Produto:
     def __init__(self,nome: str, cor: str, tipo: str, descricao: str, codigo: int):
+        self.__nome = None
+        self.__cor = None
+        self.__tipo = None
+        self.descricao = None
+        self.__codigo = None
         if isinstance(nome, str):
             self.__nome = nome
         if isinstance(cor, str):

@@ -1,97 +1,193 @@
-from limite.tela_produto import TelaProduto
+import PySimpleGUI as sg
 from entidade.produto import Produto
+from persistencia.produto_dao import ProdutoDAO
+from limite.tela_produto import TelaProduto
+from limite.tela_cadastro_produto import TelaCadastroProduto
+from limite.tela_seleciona_codigo import TelaSelecionaCodigo
+from limite.tela_altera_produto import TelaAlteraProduto
+from limite.tela_remove_produto import TelaRemoveProduto
+from limite.tela_lista_entidades import TelaListaEntidades
 
-class ControladorProduto():
+
+class ControladorProduto:
+
     def __init__(self, controlador_sistema):
-        self.__produtos = []
-        self.__controlador_sistema = controlador_sistema
+        self.__produto_dao = ProdutoDAO()
         self.__tela_produto = TelaProduto()
+        self.__controlador_sistema = controlador_sistema
+        self.__tela_cadastro_produto = TelaCadastroProduto()
+        self.__tela_seleciona_codigo = TelaSelecionaCodigo()
+        self.__tela_altera_produto = TelaAlteraProduto()
+        self.__tela_remove_produto = TelaRemoveProduto()
+        self.__tela_lista_entidades = TelaListaEntidades()
 
     @property
     def produtos(self):
-        return self.__produtos
+        return self.__produto_dao.get_all()
 
-    def adiciona_produto(self):
-        dados_produto = self.__tela_produto.pega_dados_produto(self.__produtos)
-        produto = Produto(dados_produto["nome"], dados_produto["cor"], dados_produto["tipo"], dados_produto["descricao"], dados_produto["codigo"])
-        self.__produtos.append(produto)
+    def inclui_produto(self):
+        self.__tela_cadastro_produto.init_components()
+        while True:
+            botao, valores = self.__tela_cadastro_produto.open(self.__produto_dao.get_all_keys())
 
-    def exclui_produto(self):
-        self.__tela_produto.mostra_mensagem("\n-------- EXCLUIR PRODUTO --------")
-        self.lista_produtos()
-
-        if len(self.__produtos) < 1:
-            pass
-        else:
-            codigo_produto = self.__tela_produto.seleciona_produto()
-            produto = self.pega_produto_por_codigo(codigo_produto)
-
-            if produto is not None:
-                self.__produtos.remove(produto)
-                self.__tela_produto.mostra_mensagem("\nProduto excluido.\n")
+            if botao == 'incluir':
+                if valores is not None:
+                    produto = Produto(valores['nome'],valores['cor'], valores['tipo'], valores['descricao'], valores['codigo'])
+                    self.__produto_dao.persist(produto)
+                    self.__tela_produto.show_message('Produto adicionado!', f'O produto {produto.codigo} - {produto.nome} foi adicionado.')
+                    break
             else:
-                self.__tela_produto.mostra_mensagem("\nProduto inexistente!\n")
+                break
 
     def altera_produto(self):
-        self.__tela_produto.mostra_mensagem("\n-------- ALTERAR PRODUTO --------")
-        self.lista_produtos()
-
-        if len(self.__produtos) < 1:
-            pass
+        if len(self.__produto_dao.get_all()) < 1:
+            self.__tela_produto.show_message("Erro!", "Não existem produtos cadastrados!")
         else:
-            codigo_produto = self.__tela_produto.seleciona_produto()
-            produto = self.pega_produto_por_codigo(codigo_produto)
+            self.__tela_seleciona_codigo.init_components()
+            botao, codigo = self.__tela_seleciona_codigo.open()
 
-            if produto is not None:
-                novos_dados_produto = self.__tela_produto.pega_dados_produto(self.__produtos)
-                produto.nome = novos_dados_produto["nome"]
-                produto.cor = novos_dados_produto["cor"]
-                produto.tipo = novos_dados_produto["tipo"]
-                produto.descricao = novos_dados_produto["descricao"]
-                produto.codigo = novos_dados_produto["codigo"]
-                self.lista_produtos()
-            else:
-                self.__tela_produto.mostra_mensagem("\nProduto inexistente!\n")
+            produto_encontrado = None
+            if botao == 'buscar':
+                if codigo is not None and codigo in self.__produto_dao.get_all_keys():
+                    for produto in self.__produto_dao.get_all():
+                        if produto.codigo == codigo:
+                            produto_encontrado = produto
+                            self.__tela_produto.show_message("Produto encontrado!",
+                                                             f"O produto de código {codigo} foi encontrado.")
+                            break
+                    self.__tela_altera_produto.init_components(produto_encontrado)
+                    while True:
+                        botao, valores = self.__tela_altera_produto.open()
+                        if botao == 'alterar':
+                            if valores is not None:
+                                produto_encontrado.nome = valores['nome']
+                                produto_encontrado.cor = valores['cor']
+                                produto_encontrado.tipo = valores['tipo']
+                                produto_encontrado.descricao = valores['descricao']
+
+                                self.__produto_dao.persist(produto_encontrado)
+                                self.__tela_altera_produto.show_message("Alteração de produto",
+                                                                        'Produto alterado com sucesso!')
+                                break
+                        else:
+                            self.__tela_altera_produto.show_message("Alteração de produto", 'Operação cancelada!')
+                            break
+                else:
+                    if botao != 'cancelar':
+                        self.__tela_produto.show_message("Erro!", "Codigo Inexistente!")
+
+
+    def exclui_produto(self):
+        if len(self.__produto_dao.get_all()) < 1:
+            self.__tela_produto.show_message('Erro!', 'Não existem produtos cadastrados!')
+        else:
+            self.__tela_seleciona_codigo.init_components()
+            botao, codigo = self.__tela_seleciona_codigo.open()
+
+            produto_encontrado = None
+
+            if botao == 'buscar':
+                if codigo is not None and codigo in self.__produto_dao.get_all_keys():
+                    for produto in self.__produto_dao.get_all():
+                        if produto.codigo == codigo:
+                            produto_encontrado = produto
+                            self.__tela_produto.show_message("Produto encontrado!",
+                                                             f"O produto de código {codigo} foi encontrado.")
+                            break
+                    self.__tela_remove_produto.init_components(produto_encontrado)
+                    while True:
+                        botao = self.__tela_remove_produto.open()
+
+                        if botao == 'remover':
+                            self.__produto_dao.remove(produto_encontrado)
+                            self.__tela_remove_produto.show_message('Remover produto', 'Produto removido com sucesso!')
+                            self.__tela_remove_produto.close()
+                            break
+
+                        elif botao == 'cancelar':
+                            self.__tela_remove_produto.show_message('Remover produto', 'Operação cancelada!')
+                            self.__tela_remove_produto.close()
+                            break
+
+                        elif botao in ('cancelar', sg.WIN_CLOSED):
+                            self.__tela_remove_produto.show_message('Remover produto', 'Operação cancelada!')
+                            self.__tela_remove_produto.close()
+                            break
+
+                else:
+                    if botao != 'cancelar':
+                        self.__tela_produto.show_message("Erro!", "Codigo Inexistente!")
 
     def lista_um_produto(self):
-        if len(self.__produtos) < 1:
-            self.__tela_produto.mostra_mensagem("\nNao existem produtos cadastrados.")
-            self.__tela_produto.mostra_mensagem("Primeiro cadastre um produto!\n")
+        if len(self.__produto_dao.get_all()) < 1:
+            self.__tela_produto.show_message('Erro!', 'Não existem produtos cadastrados!')
         else:
-            codigo_produto = self.__tela_produto.seleciona_produto()
-            produto = self.pega_produto_por_codigo(codigo_produto)
+            self.__tela_seleciona_codigo.init_components()
+            botao, codigo = self.__tela_seleciona_codigo.open()
 
-            if produto is not None:
-                self.__tela_produto.mostra_mensagem("\nProduto encontrado:\n")
-                self.__tela_produto.mostra_produto({"nome": produto.nome,"cor": produto.cor, "tipo": produto.tipo, "descricao": produto.descricao, "codigo": produto.codigo})
-            else:
-                self.__tela_produto.mostra_mensagem("Produto inexistente!\n")
+            produto_encontrado = None
+            informacoes_tabela = []
+            colunas = ['Código', 'Produto', 'Tipo', 'Cor', 'Descricao']
+
+            if botao == 'buscar':
+                if codigo is not None and codigo in self.__produto_dao.get_all_keys():
+                    for produto in self.__produto_dao.get_all():
+                        if produto.codigo == codigo:
+                            produto_encontrado = produto
+                            self.__tela_produto.show_message("Produto encontrado!",
+                                                             f"O produto de código {codigo} foi encontrado.")
+                            break
+                    informacoes_tabela.append([produto_encontrado.codigo, produto_encontrado.nome, produto_encontrado.tipo, produto_encontrado.cor, produto_encontrado.descricao])
+                    self.__tela_lista_entidades.init_components(informacoes_tabela, colunas, 'Lista um produto')
+                    while True:
+                        botao = self.__tela_lista_entidades.open()
+                        if botao == 'ok' or botao == None:
+                            self.__tela_lista_entidades.close()
+                            break
+                else:
+                    if botao != 'cancelar':
+                        self.__tela_produto.show_message("Erro!", "Codigo Inexistente!")
+
 
     def lista_produtos(self):
-        quantidade_produtos = len(self.__produtos)
-        if quantidade_produtos < 1:
-            self.__tela_produto.mostra_mensagem("\nNao existem produtos cadastrados.")
-            self.__tela_produto.mostra_mensagem("Primeiro cadastre um produto!\n")
+        if len(self.__produto_dao.get_all()) < 1:
+            self.__tela_produto.show_message('Erro!', 'Não existem produtos cadastrados!')
         else:
-            self.__tela_produto.mostra_mensagem(f"\n{'Existe' if quantidade_produtos < 2 else 'Existem'} {quantidade_produtos} {'produtos cadastrados' if quantidade_produtos > 1 else 'produto cadastrado'}:\n")
-            for produto in self.__produtos:
-                self.__tela_produto.mostra_produto({"nome": produto.nome,"cor": produto.cor, "tipo": produto.tipo, "descricao": produto.descricao, "codigo": produto.codigo})
+            informacoes_tabela = []
+            colunas = ['Código', 'Produto', 'Tipo', 'Cor', 'Descricao']
 
-    def pega_produto_por_codigo(self, codigo):
-        for produto in self.__produtos:
-            if produto.codigo == codigo:
-                return produto
-        return None
+            for produto in self.__produto_dao.get_all():
+                informacoes_tabela.append([produto.codigo, produto.nome, produto.tipo, produto.cor, produto.descricao])
+            self.__tela_lista_entidades.init_components(informacoes_tabela, colunas, 'Lista de produtos')
+            while True:
+                botao = self.__tela_lista_entidades.open()
+
+                if botao == 'ok':
+                    self.__tela_lista_entidades.close()
+                    break
+                else:
+                    self.__tela_lista_entidades.close()
+                    break
+
 
     def retornar(self):
-        self.__controlador_sistema.abre_tela()
+        self.__tela_produto.close()
+
+    def sair(self):
+        exit(0)
 
     def abre_tela(self):
-        lista_opcoes = {1: self.adiciona_produto, 2: self.altera_produto, 3: self.lista_um_produto, 4: self.lista_produtos,5: self.exclui_produto, 0: self.retornar}
+        opcoes = {1: self.inclui_produto, 2: self.altera_produto,
+                  3: self.exclui_produto, 4: self.lista_um_produto,
+                  5: self.lista_produtos, 6: self.retornar, 0: self.sair}
 
-        continua = True
-        while continua:
-            try:
-                lista_opcoes[self.__tela_produto.tela_opcoes()]()
-            except Exception:
-                pass
+        while True:
+            self.__tela_produto.init_components()
+            opcao_escolhida = self.__tela_produto.tela_opcoes()
+            self.__tela_produto.close()
+
+            if opcao_escolhida == 6 or opcao_escolhida == None or sg.WIN_CLOSED:
+                self.__tela_produto.close()
+                break
+            else:
+                opcoes[opcao_escolhida]()

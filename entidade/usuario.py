@@ -1,5 +1,7 @@
 class Usuario:
     def __init__(self, nome: str, codigo: int):
+        self.__nome = None
+        self.__codigo = None
         if isinstance(nome, str):
             self.__nome = nome
         if isinstance(codigo, int):

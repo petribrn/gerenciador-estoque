@@ -22,4 +22,3 @@ class Estoque:
   @quantidade.setter
   def quantidade(self, quantidade: int):
     self.__quantidade = quantidade
-    

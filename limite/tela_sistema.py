@@ -16,7 +16,7 @@ class TelaSistema(Tela):
                     [sg.Cancel("Retornar", key=4, button_color='gray'), sg.Cancel('Sair', key=0, button_color='red')]
                 ]
 
-        super().__init__(sg.Window("Tela de movimentações", layout=layout, resizable=True, modal=True, finalize=True), (200,200))
+        super().__init__(sg.Window("Tela do Sistema", layout=layout, resizable=True, modal=True, finalize=True), (200,200))
 
     def open(self):
         botao, valores = super().read()

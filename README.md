@@ -18,9 +18,11 @@
 - [x] Mais exceptions e ajustes extras na GUI
 
 ### Victor Hugo
-- [ ] TelaSistema (interface)
-- [ ] TelaEstoque (interface)
+- [x] TelaSistema (interface)
+- [x] TelaEstoque (interface)
 - [ ] ControladorSistema (persistencia)
 - [ ] ControladorMovimentacoes (persistencia)
 - [x] Movimentação (persistencia)
+- [x] Estoque (entidade)
+- [x] Estoque (persistencia)
 

@@ -16,6 +16,7 @@
 - [x] Usuario (persistencia)
 - [x] Exceptions codigo_ja_cadastrado, valor_invalido, entrada_vazia e codigo_inexistente
 - [x] Mais exceptions e ajustes extras na GUI
+- [x] Diagramas UML
 
 ### Victor Hugo
 - [x] TelaSistema (interface)
